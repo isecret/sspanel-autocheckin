@@ -39,3 +39,5 @@ bash /path/to/ssp-autocheckin.sh
 24 10 * * * bash /path/to/ssp-autocheckin.sh >> /path/to/ssp-autocheckin.log 2>&1
 ```
 
+
+
