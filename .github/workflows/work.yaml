@@ -9,13 +9,13 @@ on:
     watch:
         types: 
             - started
-  repository_dispatch:
-  workflow_dispatch:
-    inputs:
-      ssh:
-        description: 'SSH connection to Actions'
-        required: false
-        default: 'false'
+    repository_dispatch:
+    workflow_dispatch:
+        inputs:
+            ssh:
+                description: 'SSH connection to Actions'
+                required: false
+                default: 'false'
         
 env:
     TZ: Asia/Shanghai
