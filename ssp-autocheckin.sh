@@ -98,9 +98,34 @@ if [ "${users_array}" ]; then
 
             echo -e ${result_log_text}
 
+            # Server 酱通知
             if [ "${PUSH_KEY}" ]; then
                 echo -e "text=${TITLE}&desp=${result_log_text}" > ${PUSH_TMP_PATH}
                 push=$(curl -k -s --data-binary @${PUSH_TMP_PATH} "https://sc.ftqq.com/${PUSH_KEY}.send")
+                push_code=$(echo ${push} | jq -r ".errno")
+                if [ ${push_code} -eq 0 ]; then
+                    echo -e "【推送结果】: 成功\n"
+                else
+                    echo -e "【推送结果】: 失败\n"
+                fi
+            fi
+
+            # Qmsg 酱通知
+            if [ "${QMSG_KEY}" ]; then
+                echo -e "msg=${result_log_text}" > ${PUSH_TMP_PATH}
+                push=$(curl -k -s --data-binary @${PUSH_TMP_PATH} "https://qmsg.zendee.cn/send/${QMSG_KEY}")
+                push_code=$(echo ${push} | jq -r ".errno")
+                if [ ${push_code} -eq 0 ]; then
+                    echo -e "【推送结果】: 成功\n"
+                else
+                    echo -e "【推送结果】: 失败\n"
+                fi
+            fi
+
+            # TelegramBot 通知
+            if [ "${TELEGRAMBOT_TOKEN}" ] && [ "${TELEGRAMBOT_CHATID}" ]; then
+                echo -e "chat_id=${TELEGRAMBOT_CHATID}&parse_mode=Markdown&text=${result_log_text}" > ${PUSH_TMP_PATH}
+                push=$(curl -k -s --data-binary @${PUSH_TMP_PATH} "https://api.telegram.org/bot${TELEGRAMBOT_TOKEN}/sendMessage")
                 push_code=$(echo ${push} | jq -r ".errno")
                 if [ ${push_code} -eq 0 ]; then
                     echo -e "【推送结果】: 成功\n"
@@ -115,9 +140,40 @@ if [ "${users_array}" ]; then
             login_log_text="${login_log_text}【签到状态】: 登录失败, 请检查配置\n\n"
             echo -e ${login_log_text}
 
+            # Server 酱通知
             if [ "${PUSH_KEY}" ]; then
                 echo -e "text=${TITLE}&desp=${login_log_text}" > ${PUSH_TMP_PATH}
                 push=$(curl -k -s --data-binary @${PUSH_TMP_PATH} "https://sc.ftqq.com/${PUSH_KEY}.send")
+                push_code=$(echo ${push} | jq -r ".errno")
+                if [ ${push_code} -eq 0 ]; then
+                    echo -e "【推送结果】: 成功\n"
+                else
+                    echo -e "【推送结果】: 失败\n"
+                fi
+
+                rm -rf ${COOKIE_PATH}
+                rm -rf ${PUSH_TMP_PATH}
+            fi
+
+            # Qmsg 酱通知
+            if [ "${QMSG_KEY}" ]; then
+                echo -e "msg=${login_log_text}" > ${PUSH_TMP_PATH}
+                push=$(curl -k -s --data-binary @${PUSH_TMP_PATH} "https://qmsg.zendee.cn/send/${QMSG_KEY}")
+                push_code=$(echo ${push} | jq -r ".errno")
+                if [ ${push_code} -eq 0 ]; then
+                    echo -e "【推送结果】: 成功\n"
+                else
+                    echo -e "【推送结果】: 失败\n"
+                fi
+
+                rm -rf ${COOKIE_PATH}
+                rm -rf ${PUSH_TMP_PATH}
+            fi
+
+            # TelegramBot 通知
+            if [ "${TELEGRAMBOT_TOKEN}" ] && [ "${TELEGRAMBOT_CHATID}" ]; then
+                echo -e "chat_id=${TELEGRAMBOT_CHATID}&parse_mode=Markdown&text=${result_log_text}" > ${PUSH_TMP_PATH}
+                push=$(curl -k -s --data-binary @${PUSH_TMP_PATH} "https://api.telegram.org/bot${TELEGRAMBOT_TOKEN}/sendMessage")
                 push_code=$(echo ${push} | jq -r ".errno")
                 if [ ${push_code} -eq 0 ]; then
                     echo -e "【推送结果】: 成功\n"

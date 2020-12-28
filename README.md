@@ -14,16 +14,17 @@ V2.0 版本支持多站点多用户签到，不兼容 V1.0 版本配置，升级
 
 Fork 该仓库，进入仓库后点击 `Settings`，右侧栏点击 `Secrets`，点击 `New secret`。添加一下值：
 
-| 键 | 值 | 说明 |
-| --- | --- | --- |
-| USERS | `https://abc.com----abc@abc.com----abc123456;` | 用户组，格式为 `签到站点----用户名----密码`，多个站点或用户使用 `;` 分隔，至少存在一组 |
-| PUSH_KEY | `SCxxxxxxxxxxxxx` | Server 酱 SC KEY，非必填 |
+| 键       | 值                                             | 说明                                                                                   |
+| -------- | ---------------------------------------------- | -------------------------------------------------------------------------------------- |
+| USERS    | `https://abc.com----abc@abc.com----abc123456;` | 用户组，格式为 `签到站点----用户名----密码`，多个站点或用户使用 `;` 分隔，至少存在一组 |
+| PUSH_KEY | `SCxxxxxxxxxxxxx`                              | Server 酱 SC KEY，非必填                                                               |
 
 定时任务将于每天凌晨 `2:20` 分和晚上 `20:20` 执行，如果需要修改请编辑 `.github/workflows/work.yaml` 中 `on.schedule.cron` 的值（注意，该时间时区为国际标准时区，国内时间需要 -8 Hours）。
 
 ### 方式二：部署本地或服务器
 
 脚本依赖：
+
 - `jq` 安装命令: Ubuntu: `apt-get install jq`、CentOS: `yum install jq`、MacOS: `brew install jq`
 
 克隆或下载仓库 `ssp-autocheckin.sh` 脚本，复制 `env.example` 为 `.env` 并修改配置。
