@@ -114,14 +114,24 @@ if [ "${users_array}" ]; then
             if [ "${QMSG_KEY}" ]; then
                 echo -e "msg=${result_log_text}" > ${PUSH_TMP_PATH}
                 push=$(curl -k -s --data-binary @${PUSH_TMP_PATH} "https://qmsg.zendee.cn/send/${QMSG_KEY}")
-                echo $push
+                push_code=$(echo ${push} | jq -r ".true")
+                if [ ${push_code} -eq 1 ]; then
+                    echo -e "【推送结果】: 成功\n"
+                else
+                    echo -e "【推送结果】: 失败\n"
+                fi
             fi
 
             # TelegramBot 通知
             if [ "${TELEGRAMBOT_TOKEN}" ] && [ "${TELEGRAMBOT_CHATID}" ]; then
                 echo -e "chat_id=${TELEGRAMBOT_CHATID}&parse_mode=Markdown&text=${result_log_text}" > ${PUSH_TMP_PATH}
                 push=$(curl -k -s --data-binary @${PUSH_TMP_PATH} "https://api.telegram.org/bot${TELEGRAMBOT_TOKEN}/sendMessage")
-                echo $push
+                push_code=$(echo ${push} | jq -r "true")
+                if [ ${push_code} -eq 1 ]; then
+                    echo -e "【推送结果】: 成功\n"
+                else
+                    echo -e "【推送结果】: 失败\n"
+                fi
             fi
 
             rm -rf ${COOKIE_PATH}
@@ -146,14 +156,24 @@ if [ "${users_array}" ]; then
             if [ "${QMSG_KEY}" ]; then
                 echo -e "msg=${login_log_text}" > ${PUSH_TMP_PATH}
                 push=$(curl -k -s --data-binary @${PUSH_TMP_PATH} "https://qmsg.zendee.cn/send/${QMSG_KEY}")
-                echo $push
+                push_code=$(echo ${push} | jq -r ".true")
+                if [ ${push_code} -eq 1 ]; then
+                    echo -e "【推送结果】: 成功\n"
+                else
+                    echo -e "【推送结果】: 失败\n"
+                fi
             fi
 
             # TelegramBot 通知
             if [ "${TELEGRAMBOT_TOKEN}" ] && [ "${TELEGRAMBOT_CHATID}" ]; then
                 echo -e "chat_id=${TELEGRAMBOT_CHATID}&parse_mode=Markdown&text=${result_log_text}" > ${PUSH_TMP_PATH}
                 push=$(curl -k -s --data-binary @${PUSH_TMP_PATH} "https://api.telegram.org/bot${TELEGRAMBOT_TOKEN}/sendMessage")
-                echo $push
+                push_code=$(echo ${push} | jq -r ".true")
+                if [ ${push_code} -eq 1 ]; then
+                    echo -e "【推送结果】: 成功\n"
+                else
+                    echo -e "【推送结果】: 失败\n"
+                fi
             fi
 
             rm -rf ${COOKIE_PATH}
