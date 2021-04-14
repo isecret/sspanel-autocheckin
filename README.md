@@ -6,7 +6,7 @@
    <summary>目录</summary>
 
 - [SSPanel 自动签到 V2.0 支持多站点多用户](#sspanel-自动签到-v20-支持多站点多用户)
-  - [说明](#说明)
+  - [说 明](#说明)
   - [升级警告](#升级警告)
   - [使用方法](#使用方法)
     - [方式一：Github Actions（推荐）](#方式一github-actions推荐)
