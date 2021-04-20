@@ -17,9 +17,10 @@ env:
     PUSH_KEY: ${{secrets.PUSH_KEY}}
     PUSH_TURBO_KEY: ${{secrets.PUSH_TURBO_KEY}}
     QMSG_KEY: ${{secrets.QMSG_KEY}}
+    DDBOT_TOKEN: ${{ secrets.DDBOT_TOKEN }} 
     TELEGRAMBOT_TOKEN: ${{ secrets.TELEGRAMBOT_TOKEN }} 
     TELEGRAMBOT_CHATID: ${{ secrets.TELEGRAMBOT_CHATID }}
-    DISPALY_CONTEXT: ${{ secrets.DISPALY_CONTEXT }}
+    DISPLAY_CONTEXT: ${{ secrets.DISPLAY_CONTEXT }}
 
 jobs:
     build:

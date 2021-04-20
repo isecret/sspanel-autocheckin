@@ -52,9 +52,10 @@ Fork 该仓库，进入仓库后点击 `Settings`，右侧栏点击 `Secrets`，
 | `PUSH_KEY`           | `SCxxxxxxxxxxxxx`                              | 微信推送 ，填写自己申请[Server 酱](http://sc.ftqq.com/?c=code)的`SC KEY`        | 可选                   |
 | `PUSH_TURBO_KEY`           | `xxxxxxxxxxxxxxx`                              | 企业微信推送 ，填写自己申请[Server 酱 Turbo](https://sct.ftqq.com/sendkey)的`SendKey`        | 可选                   |
 | `QMSG_KEY`           | `e6fxxxxxxxxxxxx`                              | QQ 推送 ，填写自己申请[Qmsg 酱](https://qmsg.zendee.cn/me.html#/)的 `QMSG_KEY`  | 可选                   |
+| `DDBOT_TOKEN`           | `a1bxxxxxxxxxxxx`                              | 钉钉机器人推送 ，填写申请[自定义机器人接入](https://qmsg.zendee.cn/me.html#/) 申请的回调地址中 `access_token` 的值  | 可选                   |
 | `TELEGRAMBOT_TOKEN`  | `123456:ABC-DEF1234xxx-xxx123ew11`             | TGBot 推送，填写自己向[@BotFather](https://t.me/BotFather) 申请的 Bot Token     | 可选，和下面的一起使用 |
 | `TELEGRAMBOT_CHATID` | `11xxxxxx03`                                   | TGBot 推送，填写[@getuseridbot](https://t.me/getuseridbot)私聊获取到的纯数字 ID | 可选，和上面一起使用   |
-| `DISPALY_CONTEXT`    | `1`                                            | 任务执行时是否显示详细信息，`1` 显示 `0` 关闭，默认值 `1`                       | 可选                   |
+| `DISPLAY_CONTEXT`    | `1`                                            | 任务执行时是否显示详细信息，`1` 显示 `0` 关闭，默认值 `1`                       | 可选                   |
 
 
 > TGBot 推送相关参数获取步骤可以点击 [TGBot 推送相关参数获取](#TGBot 推送相关参数获取) 查看。
@@ -104,12 +105,14 @@ https://abc.com----abc@abc.com---abc123456;"
 PUSH_KEY="PUSH_KEY"
 # Qmsg 酱推送 QMSG_KEY
 QMSG_KEY="QMSG_KEY"
+# 钉钉机器人推送 DDBOT_TOKEN
+DDBOT_TOKEN="DDBOT_TOKEN"
 # TelegramBot 推送 Token
-TELEGRAMBOT_TOKEN=TELEGRAMBOT_TOKEN
+TELEGRAMBOT_TOKEN="TELEGRAMBOT_TOKEN"
 # TelegramBot 推送用户 ID
 TELEGRAMBOT_CHATID="TELEGRAMBOT_CHATID"
 # 执行任务时是否显示签到详情
-DISPALY_CONTEXT=1
+DISPLAY_CONTEXT=1
 ```
 
 不会使用 vim 操作的直接复制下面命令（修改相关参数）到终端运行即可。
@@ -124,12 +127,14 @@ DISPALY_CONTEXT=1
 > PUSH_KEY="PUSH_KEY"
 > # Qmsg 酱推送 QMSG_KEY
 > QMSG_KEY="QMSG_KEY"
+> # 钉钉机器人推送 DDBOT_TOKEN
+> DDBOT_TOKEN="DDBOT_TOKEN"
 > # TelegramBot 推送 Token
-> TELEGRAMBOT_TOKEN=TELEGRAMBOT_TOKEN
+> TELEGRAMBOT_TOKEN="TELEGRAMBOT_TOKEN"
 > # TelegramBot 推送用户 ID
 > TELEGRAMBOT_CHATID="TELEGRAMBOT_CHATID"
 > # 执行任务时是否显示签到详情
-> DISPALY_CONTEXT=1
+> DISPLAY_CONTEXT=1
 > EOF
 > ```
 
@@ -146,7 +151,7 @@ SSPanel Auto Checkin v2.1.5 签到通知
 - 【签到用户】: EMAIL
 - 【签到时间】: 2020-12-26 19:03:19
 - 【签到状态】: 续命1天, 获得了 111 MB流量.
-- 【用户等级】：VIP1
+- 【用户等级】: VIP1
 - 【用户余额】: 2.98 CNY
 - 【用户限速】: 100 Mbps
 - 【总流量】: 317.91 GB
@@ -158,6 +163,7 @@ SSPanel Auto Checkin v2.1.5 签到通知
 
 【Server 酱推送结果】: 成功
 【Qmsg 酱推送结果】: 成功
+【钉钉机器人推送结果】: 成功
 【TelegramBot 推送结果】: 成功
 
 ---------------------------------------
@@ -189,7 +195,7 @@ SSPanel Auto Checkin v2.1.5 签到通知
 
 ### Action 定时任务运行结果只显示推送信息
 
-因为签到详细信息涉及用户隐私问题，所以对任务结果中对域名和用户名进行了脱敏处理，如果你仍希望关闭任务结果的显示，可以配置 Secret `DISPALY_CONTEXT` 的值为 `0` 将只展示任务推送结果，而不显示具体签到详情。
+因为签到详细信息涉及用户隐私问题，所以对任务结果中对域名和用户名进行了脱敏处理，如果你仍希望关闭任务结果的显示，可以配置 Secret `DISPLAY_CONTEXT` 的值为 `0` 将只展示任务推送结果，而不显示具体签到详情。
 
 ### TGBot 推送相关参数获取
 
