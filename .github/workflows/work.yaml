@@ -21,6 +21,7 @@ env:
     TELEGRAMBOT_TOKEN: ${{ secrets.TELEGRAMBOT_TOKEN }} 
     TELEGRAMBOT_CHATID: ${{ secrets.TELEGRAMBOT_CHATID }}
     DISPLAY_CONTEXT: ${{ secrets.DISPLAY_CONTEXT }}
+    PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
 
 jobs:
     build:
