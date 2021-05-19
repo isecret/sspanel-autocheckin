@@ -2,7 +2,7 @@
 PATH="/usr/local/bin:/usr/bin:/bin"
 
 #版本、初始化变量
-VERSION="2.2.0"
+VERSION="2.2.2"
 ENV_PATH="$(dirname $0)/.env"
 IS_MACOS=$(uname | grep 'Darwin' | wc -l)
 IS_DISPLAY_CONTEXT=1
@@ -144,7 +144,7 @@ send_message() {
 
     # 钉钉群机器人通知
     if [ "${DDBOT_TOKEN}" ]; then
-        push=$(curl "https://oapi.dingtalk.com/robot/send?access_token=${DDBOT_TOKEN}" \
+        push=$(curl -k -s "https://oapi.dingtalk.com/robot/send?access_token=${DDBOT_TOKEN}" \
         -H 'Content-Type: application/json' \
         -d "{
             \"msgtype\": \"markdown\",
@@ -197,6 +197,35 @@ send_message() {
             echo -e "【PushPlus 推送结果】: 成功\n"
         else
             echo -e "【PushPlus 推送结果】: 失败\n"
+        fi
+    fi
+
+    # 企业微信通知
+    if [ "${WEWORK_ID}" ] && [ "${WEWORK_AGENT_ID}" ] && [ "${WEWORK_SECRET}" ]; then
+        # 获取 token
+        token=$(curl -k -s -G "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=${WEWORK_ID}&corpsecret=${WEWORK_SECRET}")
+        access_token=$(echo ${token} | jq -r ".access_token" 2>&1)
+
+        if [ "${access_token}" ]; then
+            result_wework_log_text="${TITLE}${log_text}"
+            push=$(curl -k -s "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=${access_token}" \
+            -H 'Content-Type: application/json' \
+            -d "{
+                \"touser\": \"@all\",
+                \"msgtype\": \"markdown\",
+                \"agentid\": \"${WEWORK_AGENT_ID}\",
+                \"markdown\": {
+                    \"content\":\"${result_wework_log_text}\"
+                }
+            }")
+            push_code=$(echo ${push} | jq -r ".errcode" 2>&1)
+            if [ "${push_code}" -eq 0 ]; then
+                echo -e "【企业微信推送结果】: 成功\n"
+            else
+                echo -e "【企业微信推送结果】: 失败\n"
+            fi
+        else
+            echo -e "【企业微信推送结果】: 失败 原因: token 获取失败\n"
         fi
     fi
 }
